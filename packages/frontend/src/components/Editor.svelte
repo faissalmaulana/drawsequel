@@ -1,5 +1,5 @@
 <script>
-    const { remainSize } = $props();
+    const { occupiedWidth } = $props();
 </script>
 
-<div class=" bg-blue-500" style:width="{100 - remainSize}%">Editor</div>
+<div class=" bg-blue-500" style:width="{100 - occupiedWidth}%">Editor</div>

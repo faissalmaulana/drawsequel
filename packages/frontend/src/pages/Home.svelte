@@ -53,6 +53,6 @@
     <Navbar />
     <div class="flex h-screen gap-x-2">
         <Sidebar {sidebarWidth} />
-        <Editor remainSize={sidebarWidth.width} />
+        <Editor occupiedWidth={sidebarWidth.width} />
     </div>
 </main>
