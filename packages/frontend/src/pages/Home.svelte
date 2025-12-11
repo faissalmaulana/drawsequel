@@ -47,12 +47,15 @@
     }
 
     const sidebarWidth = new SidebarWidth(MAX_SIZE);
+
+    let nodes = $state.raw([]);
+    let edges = $state.raw([]);
 </script>
 
 <main>
     <Navbar />
     <div class="flex h-screen gap-x-2 mt-3">
         <Sidebar {sidebarWidth} />
-        <Editor occupiedWidth={sidebarWidth.width} />
+        <Editor bind:nodes bind:edges occupiedWidth={sidebarWidth.width} />
     </div>
 </main>
