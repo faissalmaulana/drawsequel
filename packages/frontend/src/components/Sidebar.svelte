@@ -1,4 +1,6 @@
 <script>
+    import AddIcon from "./icons/AddIcon.svelte";
+
     let type = $state(""); // raw type state
     let showTypePopup = $state(false);
 
@@ -27,8 +29,11 @@
 </script>
 
 <div class="w-1/4 shadow-lg">
-    <header class="p-3 shadow-sm">
+    <header class="flex justify-between align-middle p-3 shadow-sm">
         <h4 class="text-2xl font-medium">Tables</h4>
+        <button>
+            <AddIcon />
+        </button>
     </header>
 
     <div class="border">
