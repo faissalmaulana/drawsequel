@@ -1,9 +1,44 @@
 <script>
     import AddIcon from "./icons/AddIcon.svelte";
+    import AlphabetsIcon from "./icons/AlphabetsIcon.svelte";
+    import CheckIcon from "./icons/CheckIcon.svelte";
+    import DotsIcon from "./icons/DotsIcon.svelte";
+    import KeyIcon from "./icons/KeyIcon.svelte";
+    import PenIcon from "./icons/PenIcon.svelte";
 
-    let type = $state(""); // raw type state
+    /**
+     * hold input value field type
+     *
+     * @type {string}
+     */
+    let type = $state("");
+
+    /**
+     * state for displaying pop up
+     * of list value input field type
+     *
+     * @type {boolean}
+     */
     let showTypePopup = $state(false);
 
+    /**
+     * state for displaying table name
+     * as form to be editable
+     * @type {boolean}
+     */
+    let editMode = $state(false);
+
+    /**
+     * to set editMode on
+     */
+    function switchEditMode() {
+        editMode = true;
+    }
+
+    /**
+     * list values avaible to be setting in field type
+     * @type {string[]}
+     */
     const types = [
         "bigint",
         "boolean",
@@ -13,6 +48,10 @@
         "datetime",
     ];
 
+    /**
+     * State controller to getting and setting
+     * value from input field type
+     */
     const typeCtrl = {
         get value() {
             return type;
@@ -22,8 +61,18 @@
         },
     };
 
+    /**
+     * handler to setting value to type state
+     * it also will close popup component after
+     * setting value
+     *
+     * @param t {string}
+     * @retuns {void}
+     */
     function selectType(t) {
-        typeCtrl.value = t; // use controller
+        // use controller setter
+        typeCtrl.value = t;
+
         showTypePopup = false;
     }
 </script>
@@ -38,31 +87,38 @@
 
     <div class="mt-4 border">
         <div class="border p-1 px-2">
-            <form action="">
-                <input type="text" value="Table Name" />
-                <button class="bg-green-400 p-0.5 text-white cursor-pointer">
-                    Done
-                </button>
-            </form>
+            {#if !editMode}
+                <div class="flex justify-between px-1">
+                    <p class="text-lg">table name</p>
+                    <button onclick={switchEditMode} class="cursor-pointer">
+                        <PenIcon width={"16"} height={"16"} />
+                    </button>
+                </div>
+            {:else}
+                <form class="flex justify-between align-middle" action="">
+                    <input type="text" value="Table Name" class="border px-1" />
+                    <button class=" p-0.5 text-white cursor-pointer">
+                        <CheckIcon />
+                    </button>
+                </form>
+            {/if}
         </div>
 
         <form class="p-3">
-            <div
-                class="grid grid-cols-5 gap-1 items-center border p-1 rounded-lg"
-            >
+            <div class="grid grid-cols-8 gap-1 items-center">
                 <input
                     type="text"
                     placeholder="column"
-                    class="col-span-2 px-2 py-1 border rounded-md text-sm"
+                    class="col-span-3 px-2 py-1 rounded-md text-sm shadow-sm"
                 />
 
                 <!-- ================= TYPE FIELD WITH POPUP ================= -->
-                <div class="relative col-span-1 type-wrapper">
+                <div class="relative col-span-2 type-wrapper">
                     <input
                         readonly
                         bind:value={typeCtrl.value}
                         placeholder="type"
-                        class="w-full px-2 py-1 border rounded-md text-sm cursor-pointer"
+                        class="w-full px-2 py-1 rounded-md text-sm cursor-pointer shadow-sm"
                         onclick={() => (showTypePopup = !showTypePopup)}
                     />
 
@@ -88,11 +144,20 @@
                     {/if}
                 </div>
 
-                <div class="bg-green-400 rounded-md text-xs p-1 text-center">
-                    block 3
+                <div class="text-xs text-center hover:bg-gray-200 rounded-sm">
+                    <AlphabetsIcon letter="N" width="32" height="32" />
                 </div>
-                <div class="bg-red-400 rounded-md text-xs p-1 text-center">
-                    block 4
+
+                <div
+                    class="text-xs p-1 text-center hover:bg-gray-200 rounded-sm"
+                >
+                    <KeyIcon />
+                </div>
+
+                <div
+                    class="text-xs p-1 text-center hover:bg-gray-200 rounded-sm"
+                >
+                    <DotsIcon />
                 </div>
             </div>
         </form>
