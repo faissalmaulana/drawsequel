@@ -36,7 +36,7 @@
         </button>
     </header>
 
-    <div class="border">
+    <div class="mt-4 border">
         <div class="border p-1 px-2">
             <form action="">
                 <input type="text" value="Table Name" />
