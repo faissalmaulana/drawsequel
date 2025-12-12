@@ -72,7 +72,7 @@
 
 <main>
     <Navbar />
-    <div class="flex h-screen gap-x-2 mt-3">
+    <div class="flex h-screen gap-x-2">
         <SvelteFlowProvider>
             <Sidebar />
             <Editor bind:nodes bind:edges />
