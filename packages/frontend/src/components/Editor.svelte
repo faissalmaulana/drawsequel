@@ -9,7 +9,7 @@
 </script>
 
 <div class="w-5/6 bg-blue-500">
-    <SvelteFlow bind:nodes bind:edges {nodeTypes} fitView>
+    <SvelteFlow bind:nodes bind:edges {nodeTypes}>
         <Controls />
         <Background />
     </SvelteFlow>
