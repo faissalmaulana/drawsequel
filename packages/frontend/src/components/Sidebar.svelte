@@ -2,6 +2,7 @@
     import AddIcon from "./icons/AddIcon.svelte";
     import AlphabetsIcon from "./icons/AlphabetsIcon.svelte";
     import CheckIcon from "./icons/CheckIcon.svelte";
+    import CloseIcon from "./icons/CloseIcon.svelte";
     import DotsIcon from "./icons/DotsIcon.svelte";
     import KeyIcon from "./icons/KeyIcon.svelte";
     import PenIcon from "./icons/PenIcon.svelte";
@@ -22,11 +23,24 @@
     let showTypePopup = $state(false);
 
     /**
+     * state for displaying dots popup
+     *
+     * @type {boolean}
+     */
+    let showDotsPopup = $state(false);
+
+    /**
      * state for displaying table name
      * as form to be editable
      * @type {boolean}
      */
     let editMode = $state(false);
+
+    /**
+     * reference to dots popup container
+     * @type {HTMLElement | null}
+     */
+    let dotsPopupContainer = $state(null);
 
     /**
      * to set editMode on
@@ -75,7 +89,24 @@
 
         showTypePopup = false;
     }
+
+    /**
+     * handle click outside to close popup dots
+     * @param e {MouseEvent}
+     */
+    function handleClickOutsideDots(e) {
+        if (
+            showDotsPopup &&
+            dotsPopupContainer &&
+            e.target instanceof Node &&
+            !dotsPopupContainer.contains(e.target)
+        ) {
+            showDotsPopup = false;
+        }
+    }
 </script>
+
+<svelte:window onclick={handleClickOutsideDots} />
 
 <div class="w-1/4 shadow-lg">
     <header class="flex justify-between align-middle p-3 shadow-sm">
@@ -154,10 +185,43 @@
                     <KeyIcon />
                 </div>
 
+                <!-- ================= DOTS WITH POPUP ================= -->
                 <div
-                    class="text-xs p-1 text-center hover:bg-gray-200 rounded-sm"
+                    bind:this={dotsPopupContainer}
+                    class="relative text-xs p-1 text-center hover:bg-gray-200 rounded-sm"
                 >
-                    <DotsIcon />
+                    <button
+                        type="button"
+                        onclick={() => (showDotsPopup = !showDotsPopup)}
+                        class="cursor-pointer"
+                    >
+                        <DotsIcon />
+                    </button>
+
+                    <!-- Dots Popup -->
+                    {#if showDotsPopup}
+                        <div
+                            class="absolute left-full top-0 ml-2 w-80 bg-gray-800 text-white
+                                   rounded-lg shadow-xl p-4 z-50"
+                        >
+                            <div class="flex flex-col gap-4">
+                                <div class="flex justify-between items-center">
+                                    <h3
+                                        class="text-sm font-semibold uppercase tracking-wide"
+                                    >
+                                        Column Attributes
+                                    </h3>
+                                    <button
+                                        type="button"
+                                        onclick={() => (showDotsPopup = false)}
+                                        class="text-gray-400 hover:text-white cursor-pointer"
+                                    >
+                                        <CloseIcon />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {/if}
                 </div>
             </div>
         </form>
