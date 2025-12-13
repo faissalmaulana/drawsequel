@@ -61,6 +61,31 @@
             );
         };
     }
+    /**
+     * add a new column to a specific table
+     * @param {string} id - The table ID
+     */
+    function handleAddNewColumn(id) {
+        tables = tables.map((table) => {
+            if (table.id === id) {
+                return {
+                    ...table,
+                    data: {
+                        ...table.data,
+                        list: [
+                            ...table.data.list,
+                            {
+                                name: "",
+                                type: "",
+                                constraint: "",
+                            },
+                        ],
+                    },
+                };
+            }
+            return table;
+        });
+    }
 </script>
 
 <div class="w-1/4 shadow-lg">
@@ -76,6 +101,7 @@
             {table}
             handleEditTable={handleEditTable(table.id)}
             initialEditMode={newCreatedTableId === table.id}
+            {handleAddNewColumn}
         />
     {/each}
 </div>

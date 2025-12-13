@@ -3,7 +3,12 @@
     import PenIcon from "./icons/PenIcon.svelte";
     import ColumnRow from "./ColumnRow.svelte";
 
-    let { table, handleEditTable, initialEditMode = false } = $props();
+    let {
+        table,
+        handleEditTable,
+        initialEditMode = false,
+        handleAddNewColumn,
+    } = $props();
 
     /**
      * hold title input value
@@ -111,12 +116,19 @@
     </div>
 
     <form class="p-3">
-        <ColumnRow />
+        {#each table.data.list as column}
+            <div class="py-1">
+                <ColumnRow {column} />
+            </div>
+        {/each}
     </form>
 
     <div class="flex my-2 justify-end-safe pr-3">
         <button
             class="border border-green-500 p-1 font-medium text-green-500 cursor-pointer"
+            onclick={() => {
+                handleAddNewColumn(table.id);
+            }}
         >
             Add Column
         </button>

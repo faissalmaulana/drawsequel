@@ -4,6 +4,14 @@
     import DotsIcon from "./icons/DotsIcon.svelte";
     import KeyIcon from "./icons/KeyIcon.svelte";
 
+    let { column } = $props();
+
+    /**
+     * hold input value field column
+     * @type {string}
+     */
+    let columnInput = $state("");
+
     /**
      * hold input value field type
      * @type {string}
@@ -41,6 +49,11 @@
         "datetime",
     ];
 
+    $effect(() => {
+        columnInput = column.name;
+        type = column.type;
+    });
+
     /**
      * handler to setting value to type state
      * it also will close popup component after setting value
@@ -75,6 +88,7 @@
     <input
         type="text"
         placeholder="column"
+        bind:value={columnInput}
         class="col-span-3 px-2 py-1 rounded-md text-sm shadow-sm"
     />
 
