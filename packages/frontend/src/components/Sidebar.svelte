@@ -4,6 +4,14 @@
 
     let { tables = $bindable() } = $props();
 
+    /**
+     * @type {string}
+     */
+    let newCreatedTableId = $state("");
+
+    /**
+     * Create empty new table
+     */
     function handleCreateTable() {
         const totalTables = tables.length;
 
@@ -24,6 +32,8 @@
         };
 
         tables = [...tables, newTable];
+
+        newCreatedTableId = newTable.id;
     }
 
     /**
@@ -62,6 +72,10 @@
     </header>
 
     {#each tables as table}
-        <TableItem {table} handleEditTable={handleEditTable(table.id)} />
+        <TableItem
+            {table}
+            handleEditTable={handleEditTable(table.id)}
+            initialEditMode={newCreatedTableId === table.id}
+        />
     {/each}
 </div>

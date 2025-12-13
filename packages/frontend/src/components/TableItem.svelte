@@ -3,7 +3,7 @@
     import PenIcon from "./icons/PenIcon.svelte";
     import ColumnRow from "./ColumnRow.svelte";
 
-    let { table, handleEditTable } = $props();
+    let { table, handleEditTable, initialEditMode = false } = $props();
 
     /**
      * hold title input value
@@ -18,12 +18,49 @@
     let editMode = $state(false);
 
     /**
+     * track if initial setup has been done
+     * @type {boolean}
+     */
+    let initialized = $state(false);
+
+    // initialize edit mode once when initialEditMode is true
+    $effect(() => {
+        if (initialEditMode && !initialized) {
+            titleInput = table.data.title;
+            editMode = true;
+            initialized = true;
+        }
+    });
+
+    /**
+     * action to focus input when mounted
+     * @param {HTMLInputElement} node
+     * @param {boolean} shouldFocus
+     */
+    function focusInput(node, shouldFocus) {
+        if (shouldFocus) {
+            node.focus();
+            node.select();
+        }
+    }
+
+    /**
+     * reference to input element
+     * @type {HTMLInputElement | null}
+     */
+    let inputRef = $state(null);
+
+    /**
      * to set editMode on
      */
     function switchEditMode() {
-        // Initialize with current title
         titleInput = table.data.title;
         editMode = true;
+
+        // focus after DOM updates
+        setTimeout(() => {
+            inputRef?.focus();
+        }, 0);
     }
 
     /**
@@ -60,6 +97,8 @@
                 onsubmit={handleTitleInput}
             >
                 <input
+                    bind:this={inputRef}
+                    use:focusInput={initialEditMode}
                     type="text"
                     bind:value={titleInput}
                     class="border px-1"
