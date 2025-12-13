@@ -10,13 +10,13 @@
      * hold input value field column
      * @type {string}
      */
-    let columnInput = $state("");
+    let columnInput = $state(column.name);
 
     /**
      * hold input value field type
      * @type {string}
      */
-    let type = $state("");
+    let type = $state(column.type);
 
     /**
      * state for displaying pop up of list value input field type
@@ -48,11 +48,6 @@
         "date",
         "datetime",
     ];
-
-    $effect(() => {
-        columnInput = column.name;
-        type = column.type;
-    });
 
     /**
      * handler to setting value to type state
