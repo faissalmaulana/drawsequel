@@ -133,8 +133,7 @@
         <!-- Dots Popup -->
         {#if showDotsPopup}
             <div
-                class="absolute left-full top-0 ml-2 w-80 bg-gray-9t00 text-white
-                       rounded-lg shadow-xl p-4 z-50"
+                class="absolute left-full top-0 ml-2 w-80 bg-gray-900 text-white rounded-lg shadow-xl p-4 z-50"
             >
                 <div class="flex flex-col gap-4">
                     <div class="flex justify-between items-center">
