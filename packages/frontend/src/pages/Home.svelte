@@ -74,7 +74,7 @@
     <Navbar />
     <div class="flex h-screen gap-x-2">
         <SvelteFlowProvider>
-            <Sidebar />
+            <Sidebar bind:tables={nodes} />
             <Editor bind:nodes bind:edges />
         </SvelteFlowProvider>
     </div>
